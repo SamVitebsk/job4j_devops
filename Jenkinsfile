@@ -62,32 +62,34 @@ pipeline {
         }
     }
 
-    post {
+post {
         always {
             script {
-
                 notify {
+                    always {
+                        telegram {
+                            botToken "${BOT_TOKEN}"
+                            chatId "${CHAT_ID}"
+                            message "Сборка завершена независимо от результата"
+                        }
+                    }
+
                     success {
                         telegram {
                             botToken "${BOT_TOKEN}"
                             chatId "${CHAT_ID}"
-                            message """
-                                **Сборка завершена успешно!**
-                                * Название: ${env.JOB_NAME}
-                                * Номер: ${env.BUILD_NUMBER}
-                                * Статус: Успешно
-                                * Ссылка: ${env.BUILD_URL}
-                                """
+                            message "Сборка прошла успешно!"
+                        }
+                    }
+
+                    failure {
+                        telegram {
+                            botToken "${BOT_TOKEN}"
+                            chatId "${CHAT_ID}"
+                            message "Сборка провалилась!"
                         }
                     }
                 }
-                //println 'post...'
-                //
-                //def buildInfo = "Build number: ${currentBuild.number}\n" +
-                //                "Build status: ${currentBuild.currentResult}\n" +
-                //                "Started at: ${new Date(currentBuild.startTimeInMillis)}\n" +
-                //                "Duration so far: ${currentBuild.durationString}"
-                //telegramSend(message: buildInfo)
             }
         }
     }
