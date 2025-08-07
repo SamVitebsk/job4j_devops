@@ -60,6 +60,8 @@ pipeline {
     post {
         always {
             script {
+                println 'post...'
+
                 def buildInfo = "Build number: ${currentBuild.number}\n" +
                                 "Build status: ${currentBuild.currentResult}\n" +
                                 "Started at: ${new Date(currentBuild.startTimeInMillis)}\n" +
