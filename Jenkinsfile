@@ -5,6 +5,11 @@ pipeline {
         git 'Default'
     }
 
+    environment {
+        BOT_TOKEN = credentials('telegram-bot-token')
+        CHAT_ID = credentials('chat-id')
+    }
+
     stages {
         stage('Prepare Environment') {
             steps {
@@ -60,13 +65,29 @@ pipeline {
     post {
         always {
             script {
-                println 'post...'
 
-                def buildInfo = "Build number: ${currentBuild.number}\n" +
-                                "Build status: ${currentBuild.currentResult}\n" +
-                                "Started at: ${new Date(currentBuild.startTimeInMillis)}\n" +
-                                "Duration so far: ${currentBuild.durationString}"
-                telegramSend(message: buildInfo)
+                notify {
+                    success {
+                        telegram {
+                            botToken "${BOT_TOKEN}"
+                            chatId "${CHAT_ID}"
+                            message """
+                                **Сборка завершена успешно!**
+                                * Название: ${env.JOB_NAME}
+                                * Номер: ${env.BUILD_NUMBER}
+                                * Статус: Успешно
+                                * Ссылка: ${env.BUILD_URL}
+                                """
+                        }
+                    }
+                }
+                //println 'post...'
+                //
+                //def buildInfo = "Build number: ${currentBuild.number}\n" +
+                //                "Build status: ${currentBuild.currentResult}\n" +
+                //                "Started at: ${new Date(currentBuild.startTimeInMillis)}\n" +
+                //                "Duration so far: ${currentBuild.durationString}"
+                //telegramSend(message: buildInfo)
             }
         }
     }
