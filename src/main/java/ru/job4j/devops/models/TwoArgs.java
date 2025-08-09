@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *  Объект с двумя полями для хранения входных данных и вычисления суммы и произведения
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
