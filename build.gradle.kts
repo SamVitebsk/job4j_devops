@@ -2,8 +2,8 @@ plugins {
 	checkstyle
 	java
 	jacoco
-    libs.plugins.org.springframework.boot.get()
-    libs.plugins.io.spring.dependency.management.get()
+    alias(libs.plugins.org.springframework.boot)
+    alias(libs.plugins.io.spring.dependency.management)
     alias(libs.plugins.com.github.spotbugs)
 }
 
