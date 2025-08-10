@@ -40,10 +40,16 @@ dependencies {
 	compileOnly(libs.lombok)
 	annotationProcessor(libs.lombok)
 	implementation(libs.spring.boot.starter.web)
-	testImplementation(libs.spring.boot.starter.test)
+
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.liquibase)
+    implementation(libs.postgresql)
+
+    testImplementation(libs.spring.boot.starter.test)
 	testRuntimeOnly(libs.junit.platform.launcher)
 	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.assertj.core)
+    testImplementation(libs.h2)
 }
 
 tasks.withType<Test> {
@@ -109,4 +115,9 @@ tasks.register<Zip>("archiveResources") {
     doLast {
         println("Resources archived successfully at ${outputDir.get().asFile.absolutePath}")
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
