@@ -72,11 +72,6 @@ tasks.test {
     finalizedBy(tasks.spotbugsMain)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
 tasks.register("checkJarSize") {
     group = "verification"
     description = "Checks the size of the generated JAR file."
