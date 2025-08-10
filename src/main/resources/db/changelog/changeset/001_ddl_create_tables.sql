@@ -1,6 +1,1 @@
---liquibase formatted sql
---changeset samusev:create_users_table
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(2000)
-);
+--liquibase formatted sql--changeset samusev:create_users_tableCREATE TABLE users (    id SERIAL PRIMARY KEY,    username VARCHAR(2000));
