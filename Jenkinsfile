@@ -66,36 +66,3 @@ pipeline {
             }
         }
     }
-
-post {
-        always {
-            script {
-                notify {
-                    always {
-                        telegram {
-                            botToken "${BOT_TOKEN}"
-                            chatId "${CHAT_ID}"
-                            message "Сборка завершена независимо от результата"
-                        }
-                    }
-
-                    success {
-                        telegram {
-                            botToken "${BOT_TOKEN}"
-                            chatId "${CHAT_ID}"
-                            message "Сборка прошла успешно!"
-                        }
-                    }
-
-                    failure {
-                        telegram {
-                            botToken "${BOT_TOKEN}"
-                            chatId "${CHAT_ID}"
-                            message "Сборка провалилась!"
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
