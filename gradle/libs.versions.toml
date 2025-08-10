@@ -9,11 +9,13 @@ github-spotbugs = "6.0.26"
 liquibase = "4.30.0"
 postgresql = "42.7.4"
 h2 = "2.1.214"
+liquibase-gradle = "3.0.1"
 
 [plugins]
 org-springframework-boot = {id = "org.springframework.boot", version.ref = "spring-boot"}
 io-spring-dependency-management = {id = "io.spring.dependency-management", version.ref = "spring-dependency-management"}
 com-github-spotbugs = {id = "com.github.spotbugs", version.ref = "github-spotbugs"}
+org-liquibase-gradle = {id = "org.liquibase.gradle", version.ref = "liquibase-gradle"}
 
 [libraries]
 lombok = {module = "org.projectlombok:lombok", version.ref = "lombok"}

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.org.springframework.boot)
     alias(libs.plugins.io.spring.dependency.management)
     alias(libs.plugins.com.github.spotbugs)
+    alias(libs.plugins.org.liquibase.gradle)
 }
 
 group = "ru.job4j.devops"
@@ -44,6 +45,13 @@ dependencies {
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.liquibase)
     implementation(libs.postgresql)
+
+    liquibaseRuntime("org.liquibase:liquibase-core:4.30.0")
+    liquibaseRuntime("org.postgresql:postgresql:42.7.4")
+    liquibaseRuntime("javax.xml.bind:jaxb-api:2.3.1")
+    liquibaseRuntime("ch.qos.logback:logback-core:1.5.15")
+    liquibaseRuntime("ch.qos.logback:logback-classic:1.5.15")
+    liquibaseRuntime("info.picocli:picocli:4.6.1")
 
     testImplementation(libs.spring.boot.starter.test)
 	testRuntimeOnly(libs.junit.platform.launcher)
@@ -120,4 +128,27 @@ tasks.register<Zip>("archiveResources") {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.liquibase:liquibase-core:4.30.0")
+    }
+}
+
+liquibase {
+    activities.register("main") {
+        this.arguments = mapOf(
+            "logLevel"       to "info",
+            "url"            to "jdbc:postgresql://localhost:5432/job4j_devops",
+            "username"       to "postgres",
+            "password"       to "admin",
+            "classpath"      to "src/main/resources",
+            "changelogFile"  to "db/changelog/db.changelog-master.xml"
+        )
+    }
+    runList = "main"
 }
